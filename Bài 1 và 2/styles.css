@@ -1,0 +1,39 @@
+#h1_1 {
+  text-align: center;
+}
+.Bai1 {
+  text-align: center;
+}
+#Bai2 {
+  text-align: center;
+  color: #006600;
+}
+#Yeucau2 {
+  color: #0000ff;
+}
+#tieudebaitho {
+  text-align: center;
+  background-color: #f48fc2;
+  padding: auto;
+  color: #ff3399;
+}
+.Khotho {
+  text-align: center;
+  padding: auto;
+  background-color: #ffffcc;
+}
+#kho1 {
+  color: #0000ff;
+}
+#kho2 {
+  color: #f42d2d;
+}
+#kho3 {
+  color: #006600;
+}
+.short-hr {
+  width: 40%;
+  margin: 20px auto;
+  border: 0;
+  border-bottom: 2px solid black;
+}
