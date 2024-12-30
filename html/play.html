@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/main-style/general.css">
+    <link rel="stylesheet" href="../styles/main-style/main.css">
+    <link rel="stylesheet" href="../styles/main-style/header.css">
+    <link rel="stylesheet" href="../styles/menu.css">
+    <link rel="stylesheet" href="../styles/main-style/choice.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">MATH TEST</h1>
+        <div class="operation"><ul>
+            <li>
+                <div class="border-radio"><input type="radio" id="Addition" name="operation" value="+"></div> Addition
+            </li>
+            <li>
+                <div class="border-radio"><input type="radio" id="Subtraction" name="operation" value="-"></div> Subtraction
+            </li>
+            <li>
+                <div class="border-radio"><input type="radio" id="Multiplication" name="operation" value="×"></div> Multiplication
+            </li>
+            <li>
+                <div class="border-radio"><input type="radio" id="Division" name="operation" value="÷"></div> Division
+            </li>
+        </ul></div>
+        <div class="scope">
+            <ul>
+                <li>
+                    <div class="border-radio"><input type="radio" name="check2" id="1-9" value="9"></div> 1 to 9
+                </li>
+                <li>
+                    <div class="border-radio"><input type="radio" name="check2" id="1-19" value="19"></div> 1 to 19
+                </li>
+                <li>
+                    <div class="border-radio"><input type="radio" name="check2" id="1-29" value="29"></div> 1 to 29
+                </li>
+                <li>
+                    <div class="border-radio"><input type="radio" name="check2" id="1-39" value="39"></div> 1 to 39
+                </li>
+                <li>
+                    <div class="border-radio"><input type="radio" name="check2" id="1-49" value="49"></div> 1 to 49
+                </li>
+                <li>
+                    <div class="border-radio"><input type="radio" name="check2" id="1-99" value="99"></div> 1 to 99
+                </li>
+            </ul>
+            <button id="start-button"
+            onclick="
+            doSomething();
+            "
+            >Start</button>
+    <script src="../js/main.js"></script>
+</body>
+</html>

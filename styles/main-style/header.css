@@ -1,0 +1,22 @@
+header{
+    margin: 90px auto;
+    display:flex;
+    justify-content:center;
+    margin-bottom: 30px;
+    align-items: center;
+}
+p{
+    margin:0;
+}
+.header-text{
+    text-align: center;
+    margin-right: 20px;
+}
+.done-button{
+    font-size: x-large;
+    font-weight: bold;
+    padding: 30px 20px;
+    border-radius: 20px;
+    border: 7px solid black;
+    cursor: pointer;
+}

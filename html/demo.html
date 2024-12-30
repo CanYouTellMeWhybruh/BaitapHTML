@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Math Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 70px;
+        }
+
+        .content {
+            display: grid;
+            position: relative;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 630px;
+            margin: 0 auto;
+        }
+
+        .child {
+            border: 2px solid #6c757d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            position: relative;
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .child:hover {
+            transform: scale(1.05);
+            border-color: #007bff;
+        }
+
+        .child.active {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.2);
+            width: 90%;
+            height: 90%;
+            background-color: #f1f1f1;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .operation {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+        }
+
+        .options button {
+            padding: 10px 15px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: 2px solid #6c757d;
+            border-radius: 5px;
+            background-color: white;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .options button:hover {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .selected-answer {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            color: #007bff;
+        }
+
+        .done-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .done-button:hover {
+            background-color: #0056b3;
+        }
+
+        .correct {
+            background-color: #d4edda;
+        }
+
+        .incorrect {
+            background-color: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Math Test</h1>
+    <div class="content"></div>
+    <button class="done-button" style="display: none;">Done</button>
+
+    <script>
+        const content = document.querySelector('.content');
+        const doneButton = document.querySelector('.done-button');
+
+        const problems = [
+            { number1: 12, number2: 8, operator: '+' },
+            { number1: 5, number2: 9, operator: '+' },
+            { number1: 15, number2: 10, operator: '+' },
+            { number1: 7, number2: 6, operator: '+' },
+        ];
+
+        const createProblem = (index, number1, number2, operator) => {
+            const correctResult = eval(`${number1} ${operator} ${number2}`);
+            const answers = [correctResult];
+
+            while (answers.length < 4) {
+                const randomAnswer = Math.floor(Math.random() * (correctResult + 20)) + 1;
+                if (!answers.includes(randomAnswer)) {
+                    answers.push(randomAnswer);
+                }   
+            }
+
+            answers.sort(() => Math.random() - 0.5);
+
+            const problemDiv = document.createElement('div');
+            problemDiv.classList.add('child');
+            problemDiv.dataset.index = index;
+
+            const operationDiv = document.createElement('div');
+            operationDiv.classList.add('operation');
+            operationDiv.textContent = `${number1} ${operator} ${number2}`;
+
+            problemDiv.appendChild(operationDiv);
+
+            problemDiv.addEventListener('click', function () {
+                if (problemDiv.classList.contains('active') || problemDiv.dataset.answered === 'true') return;
+
+                document.querySelectorAll('.child.active').forEach(activeChild => {
+                    activeChild.classList.remove('active');
+                    const options = activeChild.querySelector('.options');
+                    if (options) options.remove();
+                });
+
+                problemDiv.classList.add('active');
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.textContent = answer;
+                    button.addEventListener('click', () => {
+                       
+                        problemDiv.dataset.answered = 'true';
+                        problemDiv.dataset.selectedAnswer = answer;
+
+                        problemDiv.classList.remove('active');
+                        optionsDiv.remove();
+
+
+                        const selectedAnswerDiv = document.createElement('div');
+                        selectedAnswerDiv.classList.add('selected-answer');
+                        selectedAnswerDiv.textContent = `Your Answer: ${answer}`;
+                        problemDiv.appendChild(selectedAnswerDiv);
+
+                        problemDiv.style.pointerEvents = 'none'; 
+
+                        if (document.querySelectorAll('.child[data-answered="true"]').length === problems.length) {
+                            doneButton.style.display = 'block'; 
+                        }
+                    });
+                    optionsDiv.appendChild(button);
+                });
+
+                problemDiv.appendChild(optionsDiv);
+            });
+
+            content.appendChild(problemDiv);
+        };
+
+        problems.forEach((problem, index) => {
+            createProblem(index, problem.number1, problem.number2, problem.operator);
+        });
+
+
+        doneButton.addEventListener('click', () => {
+            let correctCount = 0;
+
+            document.querySelectorAll('.child').forEach(problemDiv => {
+                const index = problemDiv.dataset.index;
+                const selectedAnswer = parseInt(problemDiv.dataset.selectedAnswer, 10);
+                const correctAnswer = eval(
+                    `${problems[index].number1} ${problems[index].operator} ${problems[index].number2}`
+                );
+
+                if (selectedAnswer === correctAnswer) {
+                    problemDiv.classList.add('correct');
+                    correctCount++;
+                } else {
+                    problemDiv.classList.add('incorrect');
+                }
+            });
+
+            alert(`You got ${correctCount} out of ${problems.length} correct!`);
+        });
+    </script>
+</body>
+</html>

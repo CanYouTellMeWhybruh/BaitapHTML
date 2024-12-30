@@ -1,0 +1,62 @@
+body{
+    box-sizing: border-box;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: "Poppins";
+    
+}
+#title{
+    text-align: center;
+}
+.container{
+    width:590px;
+    margin: 70px auto;
+    background-color: rgba(2, 2, 2, 0.4);
+    padding: 40px 20px;
+    border-radius: 30px;
+}
+ul{
+    list-style-type: none;
+    margin:0;
+    padding:0;
+}
+li{
+    margin-bottom: 40px;
+}
+.operation{
+    display:inline-block;
+    padding-left: 70px;
+    vertical-align: top;
+
+}
+.scope{
+    display:inline-block;
+    padding-left: 40px;
+}
+input{
+    width: 19px;
+    height:19px;
+    background-color: aliceblue;
+    appearance:none;
+    border-radius: 0;
+}
+input:checked{
+    background-color: black;
+}
+#start-button{
+    font-size: xx-large;
+    font-weight: bold;
+    padding: 30px 20px;
+    border-radius: 20px;
+    border: 7px solid black;
+    cursor: pointer;
+
+}
+.border-radio{
+    display:inline;
+    padding: 2px;
+    border: 2px solid black;
+    background-color: aliceblue;
+    width:21px;
+    height:17px;
+}

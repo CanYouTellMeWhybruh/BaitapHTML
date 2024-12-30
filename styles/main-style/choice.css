@@ -1,0 +1,53 @@
+.content-math-transition.clicked{
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    border-radius: 15px;
+    border: 4px solid black;
+    padding: 0 5px;
+    background-color: aqua;
+    font-size: 3rem;
+    height: 100%;
+}
+.content-math-transition.clicked .mark{
+    font-size: 100%;
+    justify-self: center;
+    margin-top: 15%;
+}
+.content-math-transition.clicked .answer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    visibility: visible;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.content-math-transition.clicked .answer div{
+    border: 4px solid black;
+    margin-right: 10px;
+    padding: 15px;
+    justify-content: center;
+    height: 70%;
+    border-radius: 10px;
+}
+
+.content-math-transition {
+    transition: all 0.3s ease;
+}
+
+.content-math-transition .mark {
+    transition: font-size 0.3s ease, margin-top 0.3s ease;
+}
+
+.content-math-transition .answer {
+    transition: visibility 0.3s ease, margin-top 0.3s ease, margin-left 0.3s ease, margin-right 0.3s ease;
+}
+
+.content-math-transition .answer div {
+    transition: all 0.3s ease;
+}
