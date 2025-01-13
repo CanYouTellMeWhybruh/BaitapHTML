@@ -1,4 +1,11 @@
-
+fetch('../Ver2data.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                console.log("Name:", data.name);
+                console.log("Skills:", data.skills.join(", "));
+            })
+            .catch(error => console.error('Error loading JSON:', error));
 let problems = [];
 let operationRadios,scopeRadios;
 function doSomething() {
@@ -218,8 +225,11 @@ function createRadioButton(name, id, value, label, selectedValue) {
     const checked = selectedValue === value ? 'checked' : '';
     return `
     <li>
-        <div class="border-radio">
-            <input type="radio" name="${name}" id="${id}" value="${value}" ${checked}>
-        </div> ${label}
+        <label for="${id}">
+            <div class="border-radio">
+                    <input type="radio" name="${name}" id="${id}" value="${value}" ${checked}>
+            </div>
+                ${label}
+        </label>
     </li>`;
 }

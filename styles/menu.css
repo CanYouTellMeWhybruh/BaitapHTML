@@ -39,6 +39,7 @@ input{
     background-color: aliceblue;
     appearance: none;
     border-radius: 0; /* Loại bỏ bo tròn */
+    cursor:pointer;
 }
 input:checked{
     background-color: black;
