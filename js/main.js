@@ -1,4 +1,6 @@
+
 let problems = [];
+let operationRadios,scopeRadios;
 function doSomething() {
     let mark, range;
     const selectedOperation = document.querySelector('input[name="operation"]:checked');
@@ -6,6 +8,7 @@ function doSomething() {
         alert('Vui lòng chọn một phép toán');
         return;
     }
+    operationRadios = selectedOperation.value;
     mark = selectedOperation.value;
 
     const selectedRange = document.querySelector('input[name="check2"]:checked');
@@ -13,6 +16,7 @@ function doSomething() {
         alert('Vui lòng chọn phạm vi tính toán');
         return;
     }
+    scopeRadios = selectedRange.value;
     range = Number(selectedRange.value);
 
     document.body.innerHTML = `
@@ -21,7 +25,7 @@ function doSomething() {
         <p>Select a problem below and then select an answer.</p>
         <p>When you are finished, select "Done" to see your score.</p>
     </div>
-    <button class="done-button" style="display: none;">Done</button>
+    <button class="done-button">Done</button>
 </header>
 <main>
     <div class="content"></div>
@@ -50,7 +54,7 @@ function doSomething() {
     }
 
     problems.forEach((problem, index) => {
-        createProblem(index, problem, content, doneButton, problems);
+        createProblem(index, problem, content, doneButton);
     });
 }
 
@@ -64,7 +68,7 @@ function calculateAnswer(mark, number1, number2) {
     }
 }
 
-function createProblem(index, problem, content, doneButton, problems) {
+function createProblem(index, problem, content, doneButton) {
     const optionArray = generateOptions(problem.answer);
     const problemDiv = document.createElement('div');
     problemDiv.classList.add('content-math');
@@ -80,6 +84,14 @@ function createProblem(index, problem, content, doneButton, problems) {
         </div>`;
 
     problemDiv.addEventListener('click', function () {
+        if (doneButton.textContent !== 'Done' && problemDiv.dataset.answered !== 'true' ){
+            const correctAnswer = document.createElement('div');
+            correctAnswer.classList.add('selected-answer');
+            correctAnswer.textContent = `${problem.answer}`;
+            problemDiv.appendChild(correctAnswer);
+            problemDiv.style.pointerEvents = 'none';
+            return;
+        }
         if (problemDiv.classList.contains('active') || problemDiv.dataset.answered === 'true') return;
 
         document.querySelectorAll('.content-math.active').forEach(contentMath => {
@@ -109,9 +121,9 @@ function createProblem(index, problem, content, doneButton, problems) {
 
                 problemDiv.style.pointerEvents = 'none';
 
-                if (document.querySelectorAll('.content-math[data-answered="true"]').length === problems.length) {
-                    doneButton.style.display = 'block';
-                }
+                // if (document.querySelectorAll('.content-math[data-answered="true"]').length === problems.length) {
+                //     doneButton.style.display = 'block';
+                // }
             });
             optionsDiv.appendChild(button);
         });
@@ -167,7 +179,9 @@ document.body.addEventListener('click', (event) => {
         });
 
         const headerText = document.querySelector('.header-text');
-        headerText.textContent = `You got ${correctCount} out of ${problems.length} correct.`;
+        headerText.innerHTML = `
+                                <h1 style="font-size: 40px;">Correct : ${correctCount}</h1><p>The green problems are correct.</p>
+                                <p>The white problems are incorrect.</p><p>Select the white problem to see the answer.</p>`;
         event.target.textContent = 'New';
         event.target.addEventListener('click', renderMenu);
     }
@@ -178,34 +192,34 @@ function renderMenu() {
     problems = [];
     document.body.innerHTML = `
     <div class="container">
-        <h1 id="title">MATH TEST</h1>
         <div class="operation">
             <ul>
-                ${createRadioButton('operation', 'Addition', '+', 'Addition')}
-                ${createRadioButton('operation', 'Subtraction', '-', 'Subtraction')}
-                ${createRadioButton('operation', 'Multiplication', '×', 'Multiplication')}
-                ${createRadioButton('operation', 'Division', '÷', 'Division')}
+                ${createRadioButton('operation', 'Addition', '+', 'Addition', operationRadios)}
+                ${createRadioButton('operation', 'Subtraction', '-', 'Subtraction', operationRadios)}
+                ${createRadioButton('operation', 'Multiplication', '×', 'Multiplication', operationRadios)}
+                ${createRadioButton('operation', 'Division', '÷', 'Division', operationRadios)}
             </ul>
         </div>
         <div class="scope">
             <ul>
-                ${createRadioButton('check2', '1-9', '9', '1 to 9')}
-                ${createRadioButton('check2', '1-19', '19', '1 to 19')}
-                ${createRadioButton('check2', '1-29', '29', '1 to 29')}
-                ${createRadioButton('check2', '1-39', '39', '1 to 39')}
-                ${createRadioButton('check2', '1-49', '49', '1 to 49')}
-                ${createRadioButton('check2', '1-99', '99', '1 to 99')}
+                ${createRadioButton('check2', '1-9', '9', '1 to 9', scopeRadios)}
+                ${createRadioButton('check2', '1-19', '19', '1 to 19', scopeRadios)}
+                ${createRadioButton('check2', '1-29', '29', '1 to 29', scopeRadios)}
+                ${createRadioButton('check2', '1-39', '39', '1 to 39', scopeRadios)}
+                ${createRadioButton('check2', '1-49', '49', '1 to 49', scopeRadios)}
+                ${createRadioButton('check2', '1-99', '99', '1 to 99', scopeRadios)}
             </ul>
             <button id="start-button" onclick="doSomething();">Start</button>
         </div>
     </div>`;
 }
 
-function createRadioButton(name, id, value, label) {
+function createRadioButton(name, id, value, label, selectedValue) {
+    const checked = selectedValue === value ? 'checked' : '';
     return `
     <li>
         <div class="border-radio">
-            <input type="radio" name="${name}" id="${id}" value="${value}">
+            <input type="radio" name="${name}" id="${id}" value="${value}" ${checked}>
         </div> ${label}
     </li>`;
 }

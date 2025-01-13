@@ -70,7 +70,7 @@ function run(Data) {
   const OptionValueIndex = OptionHeaders.indexOf('Value');
 
   const Options = OperationID.map(id =>
-    Data.Options.slice(1)
+    Data.Options.slice(1) // 
       .map(row => row.split(','))
       .filter(row => row[OptionOperationIDIndex] === id)
       .map(row => row[OptionValueIndex])

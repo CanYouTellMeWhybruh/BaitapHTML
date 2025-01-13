@@ -11,7 +11,11 @@
 // // Đọc file options.csv
 // Data.Options = fs.readFileSync('options.csv', 'utf-8').split('\r\n');
 
-function run(Data){
+const problemNumber = 7;
+const numberOfOptions = 4;
+const randomRange = 9;
+
+function run(data){
     const mark = '+';
   const type = {
     '+': 'add',
@@ -22,18 +26,18 @@ function run(Data){
 
   const range = '99';
 
-  if (!Data) return;
+  if (!data) return;
 
-  const LevelHeaders = Data.Levels[0].split(',');
-  const typeIndex = LevelHeaders.indexOf('OperatorType');
-  const rangeIndex = LevelHeaders.indexOf('RangeMaxNumber');
+  const levelHeaders = data.Levels[0].split(',');
+  const typeIndex = levelHeaders.indexOf('OperatorType');
+  const rangeIndex = levelHeaders.indexOf('RangeMaxNumber');
 
   if (typeIndex === -1 || rangeIndex === -1) {
     console.error('Không tìm thấy các cột OperatorType hoặc RangeMaxNumber.');
     return;
   }
 
-  const LevelID = Data.Levels.slice(1)
+  const LevelID = data.Levels.slice(1)
     .map(row => row.split(','))
     .find(row => row[typeIndex] === type && row[rangeIndex] === range)?.[0];
 
@@ -42,42 +46,42 @@ function run(Data){
     return;
   }
 
-  const OperatorHeaders = Data.Operators[0].split(',');
+  const OperatorHeaders = data.Operators[0].split(',');
   const OperatorNumber1Id = OperatorHeaders.indexOf('Number1');
   const OperatorNumber2Id = OperatorHeaders.indexOf('Number2');
   const OperatorLevelID = OperatorHeaders.indexOf('LevelID');
 
-  const Numbers = [];
-  const OperationID = Data.Operators.slice(1)
+  const numbers = [];
+  const OperationID = data.Operators.slice(1)
     .map(row => row.split(','))
     .filter(row => row[OperatorLevelID] === LevelID)
     .map(row => {
-      Numbers.push([row[OperatorNumber1Id], row[OperatorNumber2Id]]);
+      numbers.push([row[OperatorNumber1Id], row[OperatorNumber2Id]]);
       return row[0];
     });
 
-  const OptionHeaders = Data.Options[0].split(',');
-  const OptionOperationIDIndex = OptionHeaders.indexOf('OperationID');
-  const OptionValueIndex = OptionHeaders.indexOf('Value');
+  const optionHeaders = data.Options[0].split(',');
+  const optionOperationIDIndex = optionHeaders.indexOf('OperationID');
+  const optionValueIndex = optionHeaders.indexOf('Value');
 
-  const Options = OperationID.map(id =>
-    Data.Options.slice(1)
+  const options = OperationID.map(id =>
+    data.options.slice(1)
       .map(row => row.split(','))
-      .filter(row => row[OptionOperationIDIndex] === id)
-      .map(row => row[OptionValueIndex])
-      .slice(0, 4)
+      .filter(row => row[optionOperationIDIndex] === id)
+      .map(row => row[optionValueIndex])
+      .slice(0, numberOfOptions)
   );
 
-  if (Numbers.length < 4 || Options.length < 4) {
+  if (numbers.length < numberOfOptions || options.length < numberOfOptions) {
     console.error('Không đủ dữ liệu để hiển thị.');
     return;
   }
-  console.log({Numbers, Options});
+  console.log({Numbers: numbers, options: options});
 }
 
 let problems = [];
-for( let i = 0 ; i < 7 ; i++){
-  const problem = (Math.floor(Math.random()*9) + 1);
+for( let i = 0 ; i < problemNumber ; i++){
+  const problem = (Math.floor(Math.random()*randomRange) + 1);
   problems.push(problem);
 }
 console.log(problems);

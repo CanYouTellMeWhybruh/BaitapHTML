@@ -1,5 +1,5 @@
 header{
-    margin: 90px auto;
+    margin: 50px auto;
     display:flex;
     justify-content:center;
     margin-bottom: 30px;
@@ -7,10 +7,13 @@ header{
 }
 p{
     margin:0;
+    margin-bottom: 5px;
 }
 .header-text{
+    font-size: small;
     text-align: center;
     margin-right: 20px;
+    font-weight: 450;
 }
 .done-button{
     font-size: x-large;
